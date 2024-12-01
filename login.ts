@@ -1,7 +1,7 @@
 import inquirer from 'inquirer'
 import playwright from 'playwright-chromium';
 import { LocalStorage } from 'node-localstorage';
-import { pathJoin } from './util/util';
+import { pathJoin } from './utilities/util';
 import { ROOT_DIR } from '.';
 
 const localStorage = new LocalStorage(pathJoin(ROOT_DIR, '.storage'));

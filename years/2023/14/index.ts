@@ -1,6 +1,6 @@
-import { logPerformance, logSolution, logStringList } from '../../../util/log';
-import { getInput, memoize, splitInput } from '../../../util/util';
-import { TestCase, logTestResult } from '../../../util/test';
+import { logPerformance, logSolution, logStringList } from 'utilities/log';
+import { getInput, memoize, splitInput } from 'utilities/util';
+import { TestCase, logTestResult } from 'utilities/test';
 import { isTestOnly } from '../../../run';
 
 const YEAR = 2023;

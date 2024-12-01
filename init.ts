@@ -2,9 +2,9 @@ import fetch from 'cross-fetch';
 import fs from 'fs';
 import fsPromises from 'fs/promises';
 import { mkdirp } from 'mkdirp';
-import { getAllYears, getDayRoot, getLatestPuzzleDate, pathJoin, wait } from './util/util';
+import { getAllYears, getDayRoot, getLatestPuzzleDate, pathJoin, wait } from './utilities/util';
 import { END_DAY } from '.';
-import { getSessionToken } from './util/util';
+import { getSessionToken } from './utilities/util';
 
 type Config = {
 	retrieve: boolean;

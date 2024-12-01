@@ -1,6 +1,6 @@
 
 import { END_DAY, END_YEAR, START_DAY, START_YEAR } from './index';
-import { getLatestPuzzleDate, getDayRoot, pathJoin } from './util/util';
+import { getLatestPuzzleDate, getDayRoot, pathJoin } from './utilities/util';
 
 let year: number = 0;
 let day: number = 0;
