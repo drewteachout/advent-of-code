@@ -1,8 +1,8 @@
-import { logPerformance, logSolution } from '../../util/log';
-import { getInput } from '../../util/util';
-import { TestCase, logTestResult } from '../../util/test';
+import { logPerformance, logSolution } from '../../../util/log';
+import { getInput } from '../../../util/util'; 
+import { TestCase, logTestResult } from '../../../util/test';
 import { performance } from 'perf_hooks';
-import { isTestOnly } from '../../run';
+import { isTestOnly } from '../../../run';
 
 const YEAR = 2023;
 const DAY = 1;

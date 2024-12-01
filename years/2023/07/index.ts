@@ -1,7 +1,7 @@
-import { logPerformance, logSolution } from '../../util/log';
-import { getInput } from '../../util/util';
-import { TestCase, logTestResult } from '../../util/test';
-import { isTestOnly } from '../../run';
+import { logPerformance, logSolution } from '../../../util/log';
+import { getInput } from '../../../util/util';
+import { TestCase, logTestResult } from '../../../util/test';
+import { isTestOnly } from '../../../run';
 
 const YEAR = 2023;
 const DAY = 7;

@@ -1,7 +1,7 @@
-import { logPerformance, logSolution } from '../../util/log';
-import { getInput } from '../../util/util';
-import { TestCase, logTestResult } from '../../util/test';
-import { isTestOnly } from '../../run';
+import { logPerformance, logSolution } from '../../../util/log';
+import { getInput } from '../../../util/util';
+import { TestCase, logTestResult } from '../../../util/test';
+import { isTestOnly } from '../../../run';
 
 const YEAR = 2023;
 const DAY = 3;
@@ -55,17 +55,13 @@ function part2(input: string, ...params: unknown[]) {
 					const topIndex = index - 1;
 					const bottomIndex = index + 1;
 					const startIndex = code.index > 0 ? code.index - 1 : code.index;
-					const endIndex =  code.index + 1 !== row.length ? code.index + code[0].length : code.index; 
-
-					// const topRow: string = topIndex >= 0 ? inputRows[topIndex].substring(startIndex, endIndex) : '';
-					// const bottomRow: string = bottomIndex < inputRows.length ? inputRows[bottomIndex].substring(startIndex, endIndex) : '';
-					// const currentRow: string = row.substring(startIndex, endIndex);
+					const endIndex =  code.index + 1 !== row.length ? code.index + code[0].length : code.index;
 
 					let ratios: number[] = [];
 
 					const topRowMatches = topIndex >= 0 ? [...inputRows[topIndex].matchAll(/\d+/g)] : [];
 					const bottomRowMatches = bottomIndex < inputRows.length ? [...inputRows[bottomIndex].matchAll(/\d+/g)] : [];
-					const currentRowMatches = [...row.matchAll(/\d+/g)] ?? [];
+					const currentRowMatches = [...row.matchAll(/\d+/g)];
 					
 					topRowMatches.forEach(m => {
 						const mStart = m.index ?? -1;

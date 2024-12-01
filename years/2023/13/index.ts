@@ -1,35 +1,15 @@
-import { logPerformance, logSolution } from '../../util/log';
-import { getInput } from '../../util/util';
-import { TestCase, logTestResult } from '../../util/test';
-import { isTestOnly } from '../../run';
-import { Node, Graph } from '../../types/graph';
+import { logPerformance, logSolution } from '../../../util/log';
+import { getInput, invertArray, splitInput } from '../../../util/util';
+import { TestCase, logTestResult } from '../../../util/test';
+import { isTestOnly } from '../../../run';
 
 const YEAR = 2023;
-const DAY = 10;
+const DAY = 13;
 
 function part1(input: string, ...params: unknown[]) {
-	const rows = input.split('\n');
+	const patterns = splitInput(input, /\n\n/).map(p => p.split('\n').map(l => l.split('')));
+	const invertedPatterns = patterns.map(p => invertArray(p));
 
-	const valueMap: string[][] = []
-	
-	// Build the Graph
-	// Node - (i, j)
-	let startX = 0;
-	let startY = 0;
-	for (let i = 0; i < rows.length; i++) {
-		const cols = rows[i].split('').length;
-		console.log(rows[i])
-
-		for (let j = 0; j < cols; j++) {
-			if (cols[j] === 'S') {
-				this.startX = i;
-				this.startY = j;
-			} else if (cols[j] === '|') {
-				
-			}
-		}
-	}
-	const start = `(${startX}, ${startY})`;
 	return 'Not implemented';
 }
 
@@ -37,35 +17,31 @@ function part2(input: string, ...params: unknown[]) {
 	return 'Not implemented';
 }
 
-function findNeighbors(row: string, above: string | null, below: string | null): string[] {
-	let neighbors =  ['(-1, -1)'];
-
-	return neighbors;
-}
-
 async function run() {
 	const part1Tests: TestCase[] = [
 		{
-			input: `.....
-.S-7.
-.|.|.
-.L-J.
-.....`,
-			solution: '4',
-		},
-		{
-			input: `..F7.
-.FJ|.
-SJ.L7
-|F--J
-LJ...`,
-			solution: '8',
+			input: `#.##..##.
+..#.##.#.
+##......#
+##......#
+..#.##.#.
+..##..##.
+#.#.##.#.
+
+#...##..#
+#....#..#
+..##..###
+#####.##.
+#####.##.
+..##..###
+#....#..#`,
+			solution: '405'
 		}
 	];
 	const part2Tests: TestCase[] = [
 		{
 			input: ``,
-			solution: '',
+			solution: ''
 		}
 	];
 
