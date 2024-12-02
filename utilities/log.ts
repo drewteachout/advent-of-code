@@ -7,7 +7,7 @@ export function logSolution(day: number, year: number, part1: string, part2: str
 		'Part1: ' +
 		part1 +
 		'\nPart2: ' +
-		part2 ?? ''
+		part2
 	);
 }
 
