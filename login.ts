@@ -1,12 +1,12 @@
-import inquirer from 'inquirer'
-import playwright from 'playwright-chromium';
-import { LocalStorage } from 'node-localstorage';
-import { pathJoin } from './utilities/util';
-import { ROOT_DIR } from '.';
+import inquirer from "inquirer";
+import playwright from "playwright-chromium";
+import { LocalStorage } from "node-localstorage";
+import { pathJoin } from "./utilities/util";
+import { ROOT_DIR } from ".";
 
-const localStorage = new LocalStorage(pathJoin(ROOT_DIR, '.storage'));
+const localStorage = new LocalStorage(pathJoin(ROOT_DIR, ".storage"));
 
-const providers = ['GitHub', 'Google', 'Twitter', 'Reddit'] as const;
+const providers = ["GitHub", "Google", "Twitter", "Reddit"] as const;
 
 async function getTokenInteractive(provider: string) {
 	const browser = await playwright.chromium.launch({ headless: false });
@@ -16,9 +16,11 @@ async function getTokenInteractive(provider: string) {
 	await page.waitForURL(/^https:\/\/adventofcode\.com\/$/, { timeout: 0 });
 	// await page.waitForNavigation({ url: /^https:\/\/adventofcode\.com\/$/, timeout: 0 });
 	const cookies = await context.cookies();
-	const sessionCookie = cookies.find(c => c.name === 'session' && c.domain.includes('adventofcode.com'));
+	const sessionCookie = cookies.find(
+		c => c.name === "session" && c.domain.includes("adventofcode.com")
+	);
 	if (!sessionCookie) {
-		throw new Error('Could not acquire session cookie.');
+		throw new Error("Could not acquire session cookie.");
 	}
 	browser.close();
 	return sessionCookie.value.trim();
@@ -37,24 +39,24 @@ async function run() {
   `);
 	const mode = await inquirer.prompt([
 		{
-			name: 'mode',
-			message: 'How would you like to log in?',
-			type: 'list',
-			choices: ['Interactive', 'Manual'],
+			name: "mode",
+			message: "How would you like to log in?",
+			type: "list",
+			choices: ["Interactive", "Manual"],
 		},
 	]);
 	let token: string | undefined = undefined;
-	if (mode.mode === 'Interactive') {
+	if (mode.mode === "Interactive") {
 		const provider = await inquirer.prompt([
 			{
-				name: 'provider',
-				message: 'Which auth provider would you like to use?',
-				type: 'list',
+				name: "provider",
+				message: "Which auth provider would you like to use?",
+				type: "list",
 				choices: providers,
 			},
 		]);
 		token = await getTokenInteractive(provider.provider);
-	} else if (mode.mode === 'Manual') {
+	} else if (mode.mode === "Manual") {
 		console.log(`Follow these instructions to get your auth token and paste it in the prompt below.
   1) Open https://adventofcode.com/auth/login in a web browser.
   2) Open your browser's developer tools (usually F12) and switch to the network tab.
@@ -67,17 +69,17 @@ async function run() {
 		token = (
 			await inquirer.prompt([
 				{
-					name: 'token',
-					message: 'Paste your session token here',
-					type: 'input',
+					name: "token",
+					message: "Paste your session token here",
+					type: "input",
 				},
 			])
 		).token.trim();
 	}
 	if (token) {
-		localStorage.setItem('sessionToken', token);
+		localStorage.setItem("sessionToken", token);
 	}
-	console.log('Done.');
+	console.log("Done.");
 }
 
 run();

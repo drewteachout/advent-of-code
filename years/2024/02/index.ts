@@ -1,4 +1,4 @@
-import { logPerformance, logSolution, logStringList } from "utilities/log";
+import { logPerformance, logSolution } from "utilities/log";
 import { getInput } from "utilities/util";
 import { TestCase, logTestResult } from "utilities/test";
 import { isTestOnly } from "../../../run";
