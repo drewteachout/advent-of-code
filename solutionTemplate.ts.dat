@@ -45,7 +45,7 @@ async function run() {
 		const part1After = performance.now();
 
 		const part2Before = performance.now();
-		const part2Solution = String(part2(input))
+		const part2Solution = String(part2(input));
 		const part2After = performance.now();
 
 		logSolution(DAY, YEAR, part1Solution, part2Solution);
