@@ -7,7 +7,8 @@ const YEAR = 2024;
 const DAY = 3;
 const INSTRUCTION_REGEX = /mul\(\d{1,3},\d{1,3}\)/g;
 const MUL_REGEX = /\d{1,3}/g;
-const SECTION_REGEX = /^(.*?)dont\(\)|(?<=do\().*?(?=don\'t\(\))|(?<=do\().*/g;
+const SECTION_REGEX =
+	/(^.*?(?=don't\())|((?<=do\(\)).*$)|(?<=do\().*?(?=don\'t\(\))/g;
 
 function sumInstructions(instructions: RegExpMatchArray) {
 	return instructions
@@ -17,31 +18,29 @@ function sumInstructions(instructions: RegExpMatchArray) {
 }
 
 function part1(input: string, ...params: unknown[]) {
-	const instructions = input.match(INSTRUCTION_REGEX);
+	const instructions =
+		input.replace(/\n|\r/g, "").match(INSTRUCTION_REGEX) ?? [];
 
-	const sum = instructions ? sumInstructions(instructions) : 0;
-
-	return sum;
+	return instructions
+		.map(i => i.match(MUL_REGEX))
+		.map(a => Number(a![0]) * Number(a![1]))
+		.reduce((a, b) => a + b);
 }
 
 function part2(input: string, ...params: unknown[]) {
-	const sections = input.match(SECTION_REGEX);
+	const sections = input.replace(/\n|\r/g, "").match(SECTION_REGEX) ?? [];
 
-	let sum = 0;
-	console.log(sections);
-	sections?.forEach(s => {
-		const instructions = s.match(INSTRUCTION_REGEX);
-
-		sum += instructions ? sumInstructions(instructions) : 0;
-	});
-
-	return sum;
+	return sections
+		.flatMap(s => s.match(INSTRUCTION_REGEX) ?? [])
+		.map(i => i.match(MUL_REGEX))
+		.map(a => Number(a![0]) * Number(a![1]))
+		.reduce((a, b) => a + b);
 }
 
 async function run() {
 	const part1Tests: TestCase[] = [
 		{
-			input: `xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))`,
+			input: `xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)\nmul(8,5))`,
 			solution: "161",
 		},
 	];
@@ -49,6 +48,10 @@ async function run() {
 		{
 			input: `xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))`,
 			solution: "48",
+		},
+		{
+			input: `xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))\nxmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))\n`,
+			solution: "96",
 		},
 	];
 
