@@ -1,7 +1,7 @@
-import { logPerformance, logSolution } from "utilities/log";
-import { getInput } from "utilities/util";
-import { TestCase, logTestResult } from "utilities/test";
-import { isTestOnly } from "../../../run";
+import { logPerformance, logSolution } from 'utilities/log';
+import { getInput } from 'utilities/util';
+import { TestCase, logTestResult } from 'utilities/test';
+import { isTestOnly } from '../../../run';
 
 const YEAR = 2024;
 const DAY = 2;
@@ -28,10 +28,10 @@ function checkSafety(levels: string[]) {
 }
 
 function part1(input: string, ...params: unknown[]) {
-	const reports = input.split("\n");
+	const reports = input.split('\n');
 	let unsafeReports: string[][] = [];
 	reports.forEach(r => {
-		const levels = r.split(" ");
+		const levels = r.split(' ');
 		const isSafe = checkSafety(levels);
 		if (!isSafe) {
 			unsafeReports.push(levels);
@@ -42,10 +42,10 @@ function part1(input: string, ...params: unknown[]) {
 }
 
 function part2(input: string, ...params: unknown[]) {
-	const reports = input.split("\n");
+	const reports = input.split('\n');
 	let unsafeReports: string[][] = [];
 	reports.forEach(r => {
-		const levels = r.split(" ");
+		const levels = r.split(' ');
 		const isSafe = checkSafety(levels);
 
 		if (!isSafe) {
@@ -80,8 +80,8 @@ async function run() {
 1 3 2 4 5
 8 6 4 4 1
 1 3 6 7 9`,
-			solution: "2",
-		},
+			solution: '2'
+		}
 	];
 	const part2Tests: TestCase[] = [
 		{
@@ -91,8 +91,8 @@ async function run() {
 1 3 2 4 5
 8 6 4 4 1
 1 3 6 7 9`,
-			solution: "4",
-		},
+			solution: '4'
+		}
 	];
 
 	// Run Tests

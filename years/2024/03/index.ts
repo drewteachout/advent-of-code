@@ -1,14 +1,13 @@
-import { logPerformance, logSolution } from "utilities/log";
-import { getInput } from "utilities/util";
-import { TestCase, logTestResult } from "utilities/test";
-import { isTestOnly } from "../../../run";
+import { logPerformance, logSolution } from 'utilities/log';
+import { getInput } from 'utilities/util';
+import { TestCase, logTestResult } from 'utilities/test';
+import { isTestOnly } from '../../../run';
 
 const YEAR = 2024;
 const DAY = 3;
 const INSTRUCTION_REGEX = /mul\(\d{1,3},\d{1,3}\)/g;
 const MUL_REGEX = /\d{1,3}/g;
-const SECTION_REGEX =
-	/(^.*?(?=don't\())|((?<=do\(\)).*$)|(?<=do\().*?(?=don\'t\(\))/g;
+const SECTION_REGEX = /(^.*?(?=don't\())|((?<=do\(\)).*$)|(?<=do\().*?(?=don\'t\(\))/g;
 
 function sumInstructions(instructions: RegExpMatchArray) {
 	return instructions
@@ -18,8 +17,7 @@ function sumInstructions(instructions: RegExpMatchArray) {
 }
 
 function part1(input: string, ...params: unknown[]) {
-	const instructions =
-		input.replace(/\n|\r/g, "").match(INSTRUCTION_REGEX) ?? [];
+	const instructions = input.replace(/\n|\r/g, '').match(INSTRUCTION_REGEX) ?? [];
 
 	return instructions
 		.map(i => i.match(MUL_REGEX))
@@ -28,7 +26,7 @@ function part1(input: string, ...params: unknown[]) {
 }
 
 function part2(input: string, ...params: unknown[]) {
-	const sections = input.replace(/\n|\r/g, "").match(SECTION_REGEX) ?? [];
+	const sections = input.replace(/\n|\r/g, '').match(SECTION_REGEX) ?? [];
 
 	return sections
 		.flatMap(s => s.match(INSTRUCTION_REGEX) ?? [])
@@ -41,18 +39,18 @@ async function run() {
 	const part1Tests: TestCase[] = [
 		{
 			input: `xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)\nmul(8,5))`,
-			solution: "161",
-		},
+			solution: '161'
+		}
 	];
 	const part2Tests: TestCase[] = [
 		{
 			input: `xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))`,
-			solution: "48",
+			solution: '48'
 		},
 		{
 			input: `xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))\nxmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))\n`,
-			solution: "96",
-		},
+			solution: '96'
+		}
 	];
 
 	// Run Tests
