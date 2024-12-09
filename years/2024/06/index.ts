@@ -1,4 +1,4 @@
-import { logPerformance, logSolution } from 'utilities/log';
+import { log, logPerformance, logSolution } from 'utilities/log';
 import { getInput } from 'utilities/util';
 import { TestCase, logTestResult } from 'utilities/test';
 import { isTestOnly } from '../../../run';
@@ -20,63 +20,78 @@ function isGuard(char: string): boolean {
 
 function part1(input: string, ...params: unknown[]) {
 	const rows = input.split('\n');
-	console.log(rows);
+	log(rows)
 	let [x, y] = [0, 0];
-	let currentPos = '';
-	let positionMap = new Map<string, number>();
+	let guard = '';
+	rowLoop:
 	for (let i = 0; i < rows.length; i++) {
 		for (let j = 0; j < rows[i].length; j++) {
 			if (isGuard(rows[i][j])) {
 				x = i;
 				y = j;
-				currentPos = rows[i][j];
+				guard = rows[i][j];
+				break rowLoop;
 			}
-			positionMap.set(`${i},${j}`, 0);
 		}
 	}
-
-	console.log(positionMap);
 	console.log(x, y);
-	console.log(currentPos);
-	let solution = [];
-	while (!solution.length && x < rows.length) {
-		while (!solution.length && y < rows[x].length && isLeftAndRight(currentPos)) {
-			if ((y === 0 && currentPos === '<') || (y === rows[x].length - 1 && currentPos === '>')) {
-				solution = [...positionMap.values()].filter(v => v > 0);
-			}
-			const nextSpace = currentPos === '<' ? rows[x][y - 1] : rows[x][y + 1];
+	console.log(guard);
+	let locationsVisited = [`${x},${y}`];
+	while((x >= 0 && x < rows[0].length) && (y >= 0 && y < rows.length)) {
+		if ((x === 0 && guard === '^')
+			|| (x === rows[0].length - 1 && guard === 'v')
+			|| (y === 0 && guard === '<')
+			|| (y === rows.length - 1 && guard ==='>')
+		) {
+			locationsVisited.push(`${x},${y}`);
+			break;
+		}
 
-			// handle turn
-			if (nextSpace === '#') {
-				// turn to the right
-				currentPos = currentPos === '<' ? '^' : 'v';
+		if (isUpAndDown(guard)) {
+			if (guard === '^') {
+				const nextSpace = rows[x-1][y];
+				if (nextSpace === '#') {
+					guard = '>';
+				} else {
+					x--;
+				}
 			} else {
-				y++;
-				positionMap.set(`${x},${y}`, (positionMap.get(`${x},${y}`) ?? 0) + 1);
+				const nextSpace = rows[x+1][y];
+				if (nextSpace === '#') {
+					guard = '<';
+				} else {
+					x++;
+				}
+			}
+		} else {
+			if (guard === '<') {
+				const nextSpace = rows[x][y-1];
+				if (nextSpace === '#') {
+					guard = '^';
+				} else {
+					y--;
+				}
+			} else {
+				const nextSpace = rows[x][y+1];
+				if (nextSpace === '#') {
+					guard = 'v';
+				} else {
+					y++;
+				}
 			}
 		}
-
-		if ((x === 0 && currentPos === '^') || (x === rows.length - 1 && currentPos === 'v')) {
-			solution = [...positionMap.values()].filter(v => v > 0);
-		}
-		const nextSpace = currentPos === '<' ? rows[x][y - 1] : rows[x][y + 1];
-
-		// handle turn
-		if (nextSpace === '#') {
-			// turn to the right
-			currentPos = currentPos === '^' ? '>' : '<v>';
-		} else {
-			x++;
-			positionMap.set(`${x},${y}`, (positionMap.get(`${x},${y}`) ?? 0) + 1);
-		}
+		locationsVisited.push(`${x},${y}`);
 	}
-	console.log(positionMap);
-	console.log([...positionMap.values()].filter(v => v > 0));
 
-	return solution?.length ?? 0;
+	return new Set(locationsVisited).size ?? 0;
 }
 
 function part2(input: string, ...params: unknown[]) {
+	// TODO: Calculate the path
+
+	// Check for a loop by putting an obstacle on every spot in the path
+
+
 	return 'Not implemented';
 }
 
